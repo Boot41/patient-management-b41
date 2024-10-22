@@ -9,7 +9,7 @@ from groq import Groq
 from dotenv import load_dotenv
 from database import get_db, engine
 import models
-from schemas import UserCreate, UserResponse, Token, PatientResponse, PatientCreate , DoctorResponse, DoctorCreate, AppointmentCreate , FeedbackRequest , SymptomsInput , FeedbackResponse , SymptomsInput , VirtualAssistantResponse , FeedbackSummaryResponse
+from schemas import UserCreate, UserResponse, Token, PatientResponse, PatientCreate , DoctorResponse, DoctorCreate, AppointmentCreate , FeedbackRequest , SymptomsInput , FeedbackResponse , SymptomsInput , VirtualAssistantResponse , FeedbackSummaryResponse , RecommenderInput
 from hashing import hash_password, verify_password
 from oauth2 import create_access_token, oauth2_scheme, verify_token
 
@@ -435,7 +435,7 @@ def cancel_appointment_by_doctor(appointment_id: int, token: str = Depends(oauth
     return {"message": "Appointment cancelled successfully"}
 
 @app.post("/recommend-doctor")
-def recommend_doctor(input: SymptomsInput, db: Session = Depends(get_db)):
+def recommend_doctor(input: RecommenderInput, db: Session = Depends(get_db)):
 
     # Prepare Groq API request
     system_prompt = {
