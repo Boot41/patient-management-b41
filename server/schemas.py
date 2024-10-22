@@ -92,6 +92,9 @@ class FeedbackResponse(BaseModel):
     class Config:
         orm_mode = True
 
+class RecommenderInput(BaseModel):
+    symptoms: str
+
 # Schema for symptoms input
 class ChatMessage(BaseModel):
     role: str
