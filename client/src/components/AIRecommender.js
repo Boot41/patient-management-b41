@@ -30,7 +30,7 @@ const AIRecommender = ({ setDoctors }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg">
+    <div className="p-4 bg-white rounded-lg shadow-lg ">
       <h2 className="text-xl font-bold mb-4">AI Recommender</h2>
       <textarea
         value={symptoms}
@@ -41,7 +41,7 @@ const AIRecommender = ({ setDoctors }) => {
       />
       <button
         onClick={handleRecommend}
-        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
         disabled={loading}
       >
         {loading ? "Loading..." : "Recommend Doctor"}

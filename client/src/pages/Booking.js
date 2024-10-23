@@ -89,12 +89,14 @@ const BookingPage = () => {
   return (
     <>
       <NavMain />
-      <div className="flex flex-col lg:flex-row p-8">
+      <div className="flex flex-col lg:flex-row p-8 bg-gray-100 min-h-screen ">
         {/* Doctor Details Column */}
-        <div className="w-full lg:w-1/2 p-4 bg-white rounded-lg shadow-lg mb-6 lg:mb-0">
+        <div className="w-full lg:w-1/2 p-6 bg-white border border-gray-200 shadow-lg mb-6 lg:mb-0 mr-1">
           {doctor ? (
             <>
-              <h2 className="text-2xl font-bold mb-4">Dr. {doctor.username}</h2>
+              <h2 className="text-2xl font-bold text-blue-700 mb-2">
+                Dr. {doctor.username}
+              </h2>
               <p className="text-sm text-gray-600">
                 Specialization: {doctor.specialization}
               </p>
@@ -104,13 +106,38 @@ const BookingPage = () => {
               <p className="text-sm text-gray-600">Address: {doctor.address}</p>
             </>
           ) : (
-            <p>Loading doctor details...</p>
+            <p className="text-gray-500">Loading doctor details...</p>
           )}
+
+          {/* Feedbacks Section */}
+          <div className="p-4 mt-6 bg-gray-50 border border-gray-200 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">Patient Feedbacks</h2>
+            <div className="space-y-4">
+              {feedbacks.length > 0 ? (
+                feedbacks.map((feedback) => (
+                  <div
+                    key={feedback.id}
+                    className="p-4 bg-white rounded-lg shadow-md border border-gray-200"
+                  >
+                    <p className="text-sm text-gray-700">
+                      "{feedback.feedback}"
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">
+                  No feedback available for this doctor.
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Booking Form Column */}
-        <div className="w-full lg:w-1/2 p-4 bg-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold mb-4">Book an Appointment</h2>
+        <div className="w-full lg:w-1/2 p-6 bg-white border border-gray-200  shadow-lg">
+          <h2 className="text-2xl font-bold text-blue-700 mb-4">
+            Book an Appointment
+          </h2>
           <form onSubmit={handleBooking}>
             <div className="mb-4">
               <label
@@ -130,7 +157,7 @@ const BookingPage = () => {
                     .toISOString()
                     .split("T")[0]
                 } // Tomorrow's date
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -147,7 +174,7 @@ const BookingPage = () => {
                 name="time"
                 value={appointmentDetails.time}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -164,7 +191,7 @@ const BookingPage = () => {
                 name="reason"
                 value={appointmentDetails.reason}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows="4"
                 required
               ></textarea>
@@ -172,30 +199,11 @@ const BookingPage = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 ease-in-out"
             >
               Confirm Appointment
             </button>
           </form>
-        </div>
-      </div>
-
-      {/* Feedbacks Section */}
-      <div className="p-8">
-        <h2 className="text-2xl font-bold mb-4">Patient Feedbacks</h2>
-        <div className="space-y-4">
-          {feedbacks.length > 0 ? (
-            feedbacks.map((feedback) => (
-              <div
-                key={feedback.id}
-                className="p-4 bg-white rounded-lg shadow-md"
-              >
-                <p className="text-sm text-gray-700">"{feedback.feedback}"</p>
-              </div>
-            ))
-          ) : (
-            <p>No feedback available for this doctor.</p>
-          )}
         </div>
       </div>
     </>
