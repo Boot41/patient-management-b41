@@ -10,22 +10,78 @@ import PatientDashboard from "./pages/PatientDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import PatientProfile from "./pages/PatientProfile";
 import DoctorProfile from "./pages/DoctorProfile";
+import Unauthorized from "./pages/Unauthorized";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./contexts/AuthContext";
+
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/booking/:id" element={<BookingPage />} />
-        <Route path="/patient-profile" element={<PatientProfile />} />
-        <Route path="/doctor-profile" element={<DoctorProfile />} />
-        <Route path="/patient-dashboard" element={<PatientDashboard />} />
-        <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route
+            path="/main"
+            element={
+              <PrivateRoute
+                allowedRoles={["patient"]}
+                element={<Main />}
+              />
+            }
+          />
+          <Route
+            path="/booking/:id"
+            element={
+              <PrivateRoute
+                allowedRoles={["patient"]}
+                element={<BookingPage />}
+              />
+            }
+          />
+          <Route
+            path="/patient-profile"
+            element={
+              <PrivateRoute
+                allowedRoles={["patient"]}
+                element={<PatientProfile />}
+              />
+            }
+          />
+          <Route
+            path="/doctor-profile"
+            element={
+              <PrivateRoute
+                allowedRoles={["doctor"]}
+                element={<DoctorProfile />}
+              />
+            }
+          />
+
+          <Route
+            path="/patient-dashboard"
+            element={
+              <PrivateRoute
+                allowedRoles={["patient"]}
+                element={<PatientDashboard />}
+              />
+            }
+          />
+          <Route
+            path="/doctor-dashboard"
+            element={
+              <PrivateRoute
+                allowedRoles={["doctor"]}
+                element={<DoctorDashboard />}
+              />
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }
