@@ -1,67 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosInstance";
+import AuthContext from "../contexts/AuthContext";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const { login } = useContext(AuthContext);
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Field changed: ${name}, New Value: ${value}`);
     setFormData({
       ...formData,
       [name]: value,
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Login Data:", formData);
-    // Here you will make the actual API call to log in the user
-    try {
-      console.log("Sending login request to backend...");
-      const response = await axiosInstance.post("/token", formData, {
-        headers: {
-          // Axios automatically sets the correct Content-Type for FormData
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("Backend response:", response);
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.access_token);
-        localStorage.setItem("role", response.data.role);
-        setError("");
-        console.log(
-          "User logged in successfully, navigating to appropriate page."
-        );
-        if (response.data.role === "patient") {
-          navigate("/main");
-        } else if (response.data.role === "doctor") {
-          navigate("/doctor-dashboard");
-        } else {
-          console.error("Unknown user role:", response.data.role);
-          setError("Login failed: Unknown user role");
-        }
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      setError(error.response?.data?.message || "Login failed");
-    }
-  };
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   try {
+     const response = await axiosInstance.post("/token", formData, {
+       headers: {
+         "Content-Type": "multipart/form-data",
+       },
+     });
+     if (response.status === 200) {
+       login(response.data, navigate); // Pass `navigate` to context
+     }
+   } catch (error) {
+     setError(error.response?.data?.message || "Login failed");
+   }
+ };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
         {error && <p className="text-red-600 mb-4">{error}</p>}
-
-        <form onSubmit={handleSubmit} enctype="multipart/form-data">
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="username"
