@@ -20,12 +20,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
-          <Link
-            to="/about"
-            className="text-gray-600 hover:text-blue-500 transition duration-300"
-          >
-            About
-          </Link>
+
           <Link
             to="/login"
             className="text-gray-600 hover:text-blue-500 transition duration-300"
@@ -65,14 +60,7 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white shadow-lg">
           <ul className="space-y-4 p-4">
-            <li>
-              <Link
-                to="/about"
-                className="block text-gray-600 hover:text-blue-500"
-              >
-                About
-              </Link>
-            </li>
+
             <li>
               <Link
                 to="/login"
