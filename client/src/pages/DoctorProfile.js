@@ -41,7 +41,7 @@ const DoctorProfile = () => {
       console.log("Submitting doctor profile...");
       const response = await axiosInstance.post("/doctor-profile", profileData);
       if (response.status === 200) {
-        navigate("/doctor-dashboard"); // Redirect to doctor dashboard after saving profile
+        navigate("/login"); // Redirect to doctor dashboard after saving profile
       }
     } catch (error) {
       console.error("Error submitting doctor profile:", error);

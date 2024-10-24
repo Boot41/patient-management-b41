@@ -26,10 +26,7 @@ function App() {
           <Route
             path="/main"
             element={
-              <PrivateRoute
-                allowedRoles={["patient"]}
-                element={<Main />}
-              />
+              <PrivateRoute allowedRoles={["patient"]} element={<Main />} />
             }
           />
           <Route
@@ -41,24 +38,8 @@ function App() {
               />
             }
           />
-          <Route
-            path="/patient-profile"
-            element={
-              <PrivateRoute
-                allowedRoles={["patient"]}
-                element={<PatientProfile />}
-              />
-            }
-          />
-          <Route
-            path="/doctor-profile"
-            element={
-              <PrivateRoute
-                allowedRoles={["doctor"]}
-                element={<DoctorProfile />}
-              />
-            }
-          />
+          <Route path="/patient-profile" element={<PatientProfile />} />
+          <Route path="/doctor-profile" element={<DoctorProfile />} />
 
           <Route
             path="/patient-dashboard"
