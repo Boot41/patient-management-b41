@@ -24,7 +24,6 @@ const DoctorDashboard = () => {
         setUpcomingAppointments(upcoming);
         setCompletedAppointments(completed);
         setCancelledAppointments(cancelled);
-        console.log("Fetched appointments:", response.data);
       } catch (error) {
         console.error("Error fetching appointments:", error);
       }
@@ -81,8 +80,6 @@ const DoctorDashboard = () => {
           { ...cancelledAppointment, isCancelled: true },
         ]);
       }
-
-      console.log("Appointment cancelled:", appointment_id);
     } catch (error) {
       console.error("Error cancelling appointment:", error);
     }
@@ -116,8 +113,6 @@ const DoctorDashboard = () => {
           { ...completedAppointment, isCompleted: true },
         ]);
       }
-
-      console.log("Appointment marked as completed:", appointment_id);
     } catch (error) {
       console.error("Error marking appointment as completed:", error);
     }
@@ -141,7 +136,6 @@ const DoctorDashboard = () => {
           Doctor Dashboard
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Upcoming Appointments Column */}
           <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
             <h3 className="text-xl font-bold mb-4 border-b border-gray-300 pb-2">
               Upcoming Appointments
@@ -184,7 +178,6 @@ const DoctorDashboard = () => {
             )}
           </div>
 
-          {/* Completed Appointments Column */}
           <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
             <h3 className="text-xl font-bold mb-4 border-b border-gray-300 pb-2">
               Completed Appointments
@@ -219,7 +212,6 @@ const DoctorDashboard = () => {
             )}
           </div>
 
-          {/* Cancelled Appointments Column */}
           <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
             <h3 className="text-xl font-bold mb-4 border-b border-gray-300 pb-2">
               Cancelled Appointments
@@ -256,7 +248,6 @@ const DoctorDashboard = () => {
           </div>
         </div>
 
-        {/* Feedback Insights Section */}
         <div className="mt-8 p-4 bg-white rounded-lg shadow-md border border-gray-200">
           <h2 className="text-2xl font-bold mb-4">AI Feedback Insights</h2>
           {loadingFeedbackSummary ? (

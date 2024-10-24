@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "daisyui": "^4.12.10",
     "dayjs": "^1.11.13",
@@ -26,6 +23,11 @@
     "eject": "react-scripts eject",
     "dev": "PORT=3000 PUBLIC_URL=/absproxy/3000 WDS_SOCKET_PATH=/absproxy/3000/sockjs-node BROWSER=none react-scripts start"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -45,7 +47,13 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.25.9",
+    "@testing-library/jest-dom": "^6.6.2",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "autoprefixer": "^10.4.20",
+    "babel-jest": "^29.7.0",
+    "jest": "^27.5.1",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13"
   }
