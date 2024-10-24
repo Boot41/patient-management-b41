@@ -2,8 +2,8 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import LoginPage from "./LoginPage";
-import AuthContext from "../contexts/AuthContext";
-import axiosInstance from "../axiosInstance";
+import AuthContext from "../../contexts/AuthContext";
+import axiosInstance from "../../axiosInstance";
 
 // Mock useNavigate
 const mockNavigate = jest.fn();

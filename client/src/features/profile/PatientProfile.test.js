@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import PatientProfile from "./PatientProfile";
 

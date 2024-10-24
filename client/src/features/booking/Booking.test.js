@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { act } from "react";
 import BookingPage from "./Booking";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 
 // Mock the axiosInstance
 jest.mock("../axiosInstance");
