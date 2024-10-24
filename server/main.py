@@ -7,11 +7,11 @@ from typing import List
 import os
 from groq import Groq
 from dotenv import load_dotenv
-from database import get_db, engine
-import models
-from schemas import UserCreate, UserResponse, Token, PatientResponse, PatientCreate , DoctorResponse, DoctorCreate, AppointmentCreate , FeedbackRequest , SymptomsInput , FeedbackResponse , SymptomsInput , VirtualAssistantResponse , FeedbackSummaryResponse , RecommenderInput
-from hashing import hash_password, verify_password
-from oauth2 import create_access_token, oauth2_scheme, verify_token
+from core.database import get_db, engine
+import core.models as models
+from core.schemas import UserCreate, UserResponse, Token, PatientResponse, PatientCreate , DoctorResponse, DoctorCreate, AppointmentCreate , FeedbackRequest , SymptomsInput , FeedbackResponse , SymptomsInput , VirtualAssistantResponse , FeedbackSummaryResponse , RecommenderInput
+from utils.hashing import hash_password, verify_password
+from utils.oauth2 import create_access_token, oauth2_scheme, verify_token
 
 models.Base.metadata.create_all(bind=engine)
 
