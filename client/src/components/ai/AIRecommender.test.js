@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import AIRecommender from "./AIRecommender";
 
 // Mock axiosInstance to handle API requests

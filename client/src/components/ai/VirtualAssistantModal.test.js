@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import VirtualAssistantModal from "./VirtualAssistantModal";
-import axiosInstance from "../axiosInstance"; // Import axiosInstance to mock it
+import axiosInstance from "../../axiosInstance"; // Import axiosInstance to mock it
 import DOMPurify from "dompurify";
 
 // Mock axiosInstance
