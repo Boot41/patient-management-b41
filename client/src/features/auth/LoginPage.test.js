@@ -13,7 +13,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 // Mock axiosInstance
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 
 describe("LoginPage", () => {
   const mockLogin = jest.fn();

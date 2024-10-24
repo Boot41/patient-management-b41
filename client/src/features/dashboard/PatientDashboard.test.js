@@ -5,7 +5,7 @@ import axiosInstance from "../../axiosInstance";
 import PatientDashboard from "./PatientDashboard";
 import { MemoryRouter } from "react-router-dom"; // Using MemoryRouter to wrap the component
 
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 
 describe("PatientDashboard", () => {
   beforeEach(() => {

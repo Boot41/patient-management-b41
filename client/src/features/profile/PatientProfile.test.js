@@ -4,7 +4,7 @@ import axiosInstance from "../../axiosInstance";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import PatientProfile from "./PatientProfile";
 
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: jest.fn(),

@@ -6,13 +6,13 @@ import { MemoryRouter } from "react-router-dom";
 
 // Mock necessary components
 jest.mock("../axiosInstance");
-jest.mock("../components/NavMain", () => () => (
+jest.mock("../components/shared/NavMain", () => () => (
   <div data-testid="nav-main">NavMain</div>
 ));
-jest.mock("../components/FilterSidebar", () => () => (
+jest.mock("../components/filter/FilterSidebar", () => () => (
   <div data-testid="filter-sidebar">FilterSidebar</div>
 ));
-jest.mock("../components/SearchBar", () => (props) => (
+jest.mock("../components/search/SearchBar", () => (props) => (
   <input
     data-testid="search-bar"
     value={props.searchQuery}
@@ -20,7 +20,7 @@ jest.mock("../components/SearchBar", () => (props) => (
     placeholder="Search"
   />
 ));
-jest.mock("../components/SortComponent", () => (props) => (
+jest.mock("../components/sort/SortComponent", () => (props) => (
   <select
     data-testid="sort-component"
     value={props.sortOption}
@@ -30,13 +30,13 @@ jest.mock("../components/SortComponent", () => (props) => (
     <option value="name">Sort by Name</option>
   </select>
 ));
-jest.mock("../components/Testimonials", () => () => (
+jest.mock("../components/testimonial/Testimonials", () => () => (
   <div data-testid="testimonials">Testimonials</div>
 ));
-jest.mock("../components/AIRecommender", () => () => (
+jest.mock("../components/ai/AIRecommender", () => () => (
   <div data-testid="ai-recommender">AIRecommender</div>
 ));
-jest.mock("../components/VirtualAssistantModal", () => (props) => (
+jest.mock("../components/ai/VirtualAssistantModal", () => (props) => (
   <div data-testid="virtual-assistant-modal">
     Virtual Assistant Modal
     <button onClick={props.onClose}>Close</button>

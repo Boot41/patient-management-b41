@@ -4,7 +4,7 @@ import axiosInstance from "../../axiosInstance";
 import AIRecommender from "./AIRecommender";
 
 // Mock axiosInstance to handle API requests
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 
 describe("AIRecommender Component", () => {
   const mockSetDoctors = jest.fn(); // Mock function to simulate setDoctors

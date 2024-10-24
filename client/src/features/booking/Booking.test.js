@@ -6,10 +6,10 @@ import BookingPage from "./Booking";
 import axiosInstance from "../../axiosInstance";
 
 // Mock the axiosInstance
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 
 // Mock the NavMain component
-jest.mock("../components/NavMain", () => () => (
+jest.mock("../../components/shared/NavMain", () => () => (
   <div data-testid="nav-main">Nav Main</div>
 ));
 
