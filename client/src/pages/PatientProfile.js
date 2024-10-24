@@ -44,7 +44,7 @@ const PatientProfile = () => {
       );
       console.log("Backend response:", response);
       if (response.status === 200) {
-        navigate("/patient-dashboard"); // Redirect to patient dashboard after saving profile
+        navigate("/login"); // Redirect to patient dashboard after saving profile
       }
     } catch (error) {
       console.error("Error submitting patient profile:", error);
