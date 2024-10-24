@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 
 const AIRecommender = ({ setDoctors }) => {
   const [symptoms, setSymptoms] = useState("");
