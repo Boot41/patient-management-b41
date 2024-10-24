@@ -4,10 +4,10 @@ import axiosInstance from "../../axiosInstance"; // Ensure axiosInstance is impo
 import DoctorDashboard from "./DoctorDashboard";
 
 // Mock the axiosInstance
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 
 // Mock the NavMain component
-jest.mock("../components/NavMain", () => {
+jest.mock("../../components/shared/NavMain", () => {
   return function DummyNavMain() {
     return <div data-testid="nav-main">NavMain</div>;
   };

@@ -5,7 +5,7 @@ import DoctorProfile from "./DoctorProfile";
 import { MemoryRouter } from "react-router-dom";
 
 // Mock the axiosInstance for API calls
-jest.mock("../axiosInstance");
+jest.mock("../../axiosInstance");
 
 describe("DoctorProfile", () => {
   beforeEach(() => {

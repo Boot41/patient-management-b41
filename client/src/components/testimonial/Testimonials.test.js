@@ -1,9 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Testimonials from "./Testimonials";
-import testimonialIcon from "../assets/testimonialIcon.png"; // Mock import
 
-jest.mock("../assets/testimonialIcon.png", () => "mocked-icon.png"); // Mock image import
+jest.mock("../../assets/testimonialIcon.png", () => "mocked-icon.png"); // Mock image import
 
 describe("Testimonials Component", () => {
   test("renders the heading", () => {
