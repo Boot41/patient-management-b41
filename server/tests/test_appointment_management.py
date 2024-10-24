@@ -1,11 +1,11 @@
 # tests/test_appointments_management.py
 import pytest
 from fastapi.testclient import TestClient
-from main import app
+from ..main import app
 from sqlalchemy.orm import Session
-from server.core.database import get_db
-from server.core.models import User, Appointment
-from server.utils.hashing import hash_password
+from ..core.database import get_db
+from ..core.models import User, Appointment
+from utils.hashing import hash_password
 from datetime import datetime, timedelta
 import os
 import uuid
