@@ -3,9 +3,9 @@ import pytest
 from fastapi.testclient import TestClient
 from main import app
 from sqlalchemy.orm import Session
-from database import get_db
-from models import User, Appointment
-from hashing import hash_password
+from server.core.database import get_db
+from server.core.models import User, Appointment
+from server.utils.hashing import hash_password
 from datetime import datetime, timedelta
 import os
 import uuid
@@ -19,7 +19,7 @@ def db_session():
     """Provides a test database session for each function."""
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
-    from database import Base
+    from server.core.database import Base
 
     DATABASE_URL = "sqlite:///./test.db"
     engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})

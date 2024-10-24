@@ -5,8 +5,8 @@ from fastapi.testclient import TestClient
 from main import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database import Base, get_db
-import models
+from server.core.database import Base, get_db
+import server.core.models as models
 import os
 
 # Set the environment to use the test database
