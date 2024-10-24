@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from enum import Enum
 from datetime import datetime
 from typing import List
@@ -10,7 +10,7 @@ class RoleEnum(str, Enum):
 
 class UserCreate(BaseModel):
     username: str
-    email: str
+    email: EmailStr
     password: str
     role: RoleEnum
 

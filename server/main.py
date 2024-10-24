@@ -42,18 +42,28 @@ app.add_middleware(
 # User Registration
 @app.post("/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
+    # Check if a user with the same username already exists
+    existing_user = db.query(models.User).filter(models.User.username == user.username).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already exists.")
+
+    # Check if a user with the same email already exists
+    existing_email = db.query(models.User).filter(models.User.email == user.email).first()
+    if existing_email:
+        raise HTTPException(status_code=400, detail="Email already exists.")
+
+    # Hash password and create user
     hashed_password = hash_password(user.password)
-    # Create user with role
     db_user = models.User(
         username=user.username,
         email=user.email,
         hashed_password=hashed_password,
-        role=user.role  # Include role in user creation
-    )    
+        role=user.role
+    )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
-    
+
     return db_user
 
 # Login and Token Generation
@@ -79,8 +89,19 @@ def read_users_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get
 
 @app.post("/patient-profile", response_model=PatientResponse)
 def create_patient_profile(profile: PatientCreate, db: Session = Depends(get_db)):
+    # Check if user exists
+    user = db.query(models.User).filter(models.User.id == profile.user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Proceed only if the user exists
+    existing_profile = db.query(models.Patient).filter(models.Patient.user_id == profile.user_id).first()
+    if existing_profile:
+        raise HTTPException(status_code=400, detail="Patient profile already exists for this user")
+
+    # Create a new patient profile
     db_profile = models.Patient(
-        user_id=profile.user_id,  # Use user_id from the request payload
+        user_id=profile.user_id,
         age=profile.age,
         gender=profile.gender,
         address=profile.address
@@ -88,18 +109,28 @@ def create_patient_profile(profile: PatientCreate, db: Session = Depends(get_db)
     db.add(db_profile)
     db.commit()
     db.refresh(db_profile)
-    
+
     return db_profile
 
 @app.post("/doctor-profile", response_model=DoctorResponse)
 def create_doctor_profile(profile: DoctorCreate, db: Session = Depends(get_db)):
+    # Check if user exists
+    user = db.query(models.User).filter(models.User.id == profile.user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Check if the user has the correct role (doctor)
+    if user.role.value != "doctor":
+        raise HTTPException(status_code=400, detail="Only users with role 'doctor' can create a doctor profile")
+
     # Check if a doctor profile already exists for the given user_id
     existing_profile = db.query(models.Doctor).filter(models.Doctor.user_id == profile.user_id).first()
     if existing_profile:
         raise HTTPException(status_code=400, detail="Doctor profile already exists for this user")
 
+    # Create new doctor profile
     db_profile = models.Doctor(
-        user_id=profile.user_id,  # Use user_id from the request payload
+        user_id=profile.user_id,
         specialization=profile.specialization,
         experience=profile.experience,
         qualification=profile.qualification,
@@ -108,24 +139,21 @@ def create_doctor_profile(profile: DoctorCreate, db: Session = Depends(get_db)):
     db.add(db_profile)
     db.commit()
     db.refresh(db_profile)
-    
-    # Fetch the related username from the User table
-    user = db.query(models.User).filter(models.User.id == profile.user_id).first()
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    # Include the username in the response
-    response_data = {
-        "id": db_profile.id,
-        "user_id": db_profile.user_id,
-        "specialization": db_profile.specialization,
-        "experience": db_profile.experience,
-        "qualification": db_profile.qualification,
-        "address": db_profile.address,
-        "username": user.username  # Include the username
-    }
-    
+
+    # Prepare the response including the username from the User model
+    response_data = DoctorResponse(
+        id=db_profile.id,
+        user_id=db_profile.user_id,
+        specialization=db_profile.specialization,
+        experience=db_profile.experience,
+        qualification=db_profile.qualification,
+        address=db_profile.address,
+        username=user.username  # Include the username from the related User model
+    )
+
     return response_data
+
+
 
 # Get All Doctors with User Information
 @app.get("/doctors", response_model=list[DoctorResponse])
@@ -209,10 +237,9 @@ def get_patient_appointments(token: str = Depends(oauth2_scheme), db: Session = 
     cancelled_appointments = []
 
     for appointment in appointments:
-
+        print(appointment)
         doctor = db.query(models.Doctor).filter(models.Doctor.user_id == appointment.doctor_id).first()
         doctor_name = doctor.user.username if doctor else "Unknown"
-        print(doctor_name)
 
         if appointment.isCancelled:
             cancelled_appointments.append({
@@ -250,21 +277,15 @@ def get_patient_appointments(token: str = Depends(oauth2_scheme), db: Session = 
 
     return response_data
 
+
 @app.put("/appointments/{appointment_id}/cancel")
 def cancel_appointment(appointment_id: int, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # Verify the token to get the current username
-    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials"
     )
-    try:
-        username = verify_token(token, credentials_exception)
-        print("Username from token:", username)
-    except Exception as e:
-        print("Error while verifying token:", str(e))
-        raise credentials_exception
-    
+    username = verify_token(token, credentials_exception)
 
     # Get the user from the database
     user = db.query(models.User).filter(models.User.username == username).first()
@@ -288,6 +309,8 @@ def cancel_appointment(appointment_id: int, token: str = Depends(oauth2_scheme),
     db.commit()
 
     return {"message": "Appointment cancelled successfully"}
+
+
 
 
 @app.put("/appointments/{appointment_id}/feedback")
