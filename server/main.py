@@ -38,7 +38,6 @@ app.add_middleware(
 )
 
 
-
 # User Registration
 @app.post("/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
@@ -152,7 +151,6 @@ def create_doctor_profile(profile: DoctorCreate, db: Session = Depends(get_db)):
     )
 
     return response_data
-
 
 
 # Get All Doctors with User Information
@@ -310,13 +308,9 @@ def cancel_appointment(appointment_id: int, token: str = Depends(oauth2_scheme),
 
     return {"message": "Appointment cancelled successfully"}
 
-
-
-
 @app.put("/appointments/{appointment_id}/feedback")
 def submit_feedback(appointment_id: int, request: FeedbackRequest, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # Verify the token to get the current username
-    print(appointment_id)
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials"
@@ -337,9 +331,14 @@ def submit_feedback(appointment_id: int, request: FeedbackRequest, token: str = 
     if not appointment:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Appointment not found")
 
+    if not appointment.isCompleted:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Cannot submit feedback for an incomplete appointment")
+
     # Update the appointment feedback
     appointment.feedback = request.feedback
     db.commit()
+
+    return {"message": "Feedback submitted successfully"}
 
 from sqlalchemy.orm import joinedload
 
@@ -367,10 +366,8 @@ def get_doctor_appointments(token: str = Depends(oauth2_scheme), db: Session = D
     cancelled_appointments = []
 
     for appointment in appointments:
-
         patient = db.query(models.Patient).filter(models.Patient.user_id == appointment.patient_id).first()
         patient_name = patient.user.username if patient else "Unknown"
-        print(patient_name)
 
         appointment_data = {
             "id": appointment.id,
@@ -404,9 +401,7 @@ def mark_appointment_as_completed(appointment_id: int, token: str = Depends(oaut
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials"
     )
-
     username = verify_token(token, credentials_exception)
-    print(username)
 
     # Get the user from the database and ensure they are a doctor
     user = db.query(models.User).filter(models.User.username == username).first()
@@ -580,19 +575,23 @@ def virtual_assistant(input: SymptomsInput, db: Session = Depends(get_db)):
     
 @app.get("/doctor/feedback-summary", response_model=FeedbackSummaryResponse)
 def get_feedback_summary(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # Verify the token and get the doctor's information
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials"
+    )
     try:
-        # Verify the token and get the doctor's information
-        credentials_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials"
-        )
         username = verify_token(token, credentials_exception)
+    except HTTPException:
+        raise credentials_exception
 
-        # Fetch the user information and ensure it is a doctor
-        user = db.query(models.User).filter(models.User.username == username).first()
-        if not user or user.role.value != "doctor":
-            raise credentials_exception
+    # Fetch the user information and ensure it is a doctor
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if not user or user.role.value != "doctor":
+        raise credentials_exception
 
+    # Now retrieve feedback for this doctor
+    try:
         doctor_id = user.id
 
         # Get all feedbacks for the given doctor ID
@@ -625,4 +624,8 @@ def get_feedback_summary(token: str = Depends(oauth2_scheme), db: Session = Depe
 
     except Exception as e:
         print(f"Error generating feedback summary: {e}")
-        raise HTTPException(status_code=500, detail="Error generating feedback summary")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Error generating feedback summary")
+
+
+
+
