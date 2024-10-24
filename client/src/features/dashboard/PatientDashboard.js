@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../axiosInstance";
-import NavMain from "../components/NavMain";
+import axiosInstance from "../../axiosInstance";
+import NavMain from "../../components/shared/NavMain";
 
 const PatientDashboard = () => {
   const [upcomingAppointments, setUpcomingAppointments] = useState([]);

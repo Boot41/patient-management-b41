@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NavMain from "../components/NavMain";
+import NavMain from "../components/shared/NavMain";
 import FilterSidebar from "../components/FilterSidebar";
 import SearchBar from "../components/SearchBar";
 import SortComponent from "../components/SortComponent";

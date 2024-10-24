@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./features/auth/LoginPage";
+import RegisterPage from "./features/auth/RegisterPage";
 import Main from "./pages/Main";
-import BookingPage from "./pages/Booking";
-import PatientDashboard from "./pages/PatientDashboard";
-import DoctorDashboard from "./pages/DoctorDashboard";
-import PatientProfile from "./pages/PatientProfile";
-import DoctorProfile from "./pages/DoctorProfile";
+import BookingPage from "./features/booking/Booking";
+import PatientDashboard from "./features/dashboard/PatientDashboard";
+import DoctorDashboard from "./features/dashboard/DoctorDashboard";
+import PatientProfile from "./features/profile/PatientProfile";
+import DoctorProfile from "./features/profile/DoctorProfile";
 import Unauthorized from "./pages/Unauthorized";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/shared/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 
 

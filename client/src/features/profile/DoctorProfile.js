@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 
 const DoctorProfile = () => {
   const [formData, setFormData] = useState({

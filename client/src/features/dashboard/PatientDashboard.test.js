@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom"; // No need for /extend-expect
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import PatientDashboard from "./PatientDashboard";
 import { MemoryRouter } from "react-router-dom"; // Using MemoryRouter to wrap the component
 

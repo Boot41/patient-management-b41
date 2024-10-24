@@ -1,6 +1,6 @@
 import React from "react";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/shared/Navbar";
 import { useNavigate } from "react-router-dom";
 import landingIcon from "../assets/landingIcon.png";
 import serviceIcon1 from "../assets/serviceIcon1.png";

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useParams, useNavigate } from "react-router-dom";
-import axiosInstance from "../axiosInstance";
-import NavMain from "../components/NavMain";
+import axiosInstance from "../../axiosInstance";
+import NavMain from "../../components/shared/NavMain";
 
 const BookingPage = () => {
   const { id } = useParams();

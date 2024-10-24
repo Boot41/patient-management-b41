@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../axiosInstance"; // Use axiosInstance
+import axiosInstance from "../../axiosInstance"; // Use axiosInstance
 import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {

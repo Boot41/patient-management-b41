@@ -1,6 +1,6 @@
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import axiosInstance from "../axiosInstance"; // Ensure axiosInstance is imported
+import axiosInstance from "../../axiosInstance"; // Ensure axiosInstance is imported
 import DoctorDashboard from "./DoctorDashboard";
 
 // Mock the axiosInstance
