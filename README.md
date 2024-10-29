@@ -3,7 +3,8 @@
 ### Built using Dev41
 
 ## Overview
-This repository contains a web application built with FastAPI for the backend and React for the frontend. The application is designed to provide a seamless user experience while interacting with the backend services.
+This repository contains the Patient Appointment Management System (PMS-B41), a full-stack web application built with FastAPI for the backend and React with Tailwind CSS for the frontend. The application provides an intuitive and seamless experience for managing patient appointments, doctor information, and patient-doctor interaction.
+
 
 ## Table of Contents
 - [Features](#features)
@@ -14,60 +15,36 @@ This repository contains a web application built with FastAPI for the backend an
 - [License](#license)
 
 ## Features
-- User-friendly interface
-- CRUD operations for managing resources
+- User Registration & Login with role-based access control (patient and doctor)
+- Appointment Booking and Cancellation options
+- Patient and Doctor Dashboards with personalized appointment views
+- Feedback System for patient reviews and AI based feeback insights.
+- AI based doctor recommendation system using Groq LLM.
+- Appointment Scheduling Assistant using Groq LLM for improved appointment management and virtual medical support
 - Responsive design with a modern UI
 
 ## Technologies Used
 - **Backend**: FastAPI
 - **Frontend**: React
-- **Database**: PostgreSQL (or any other database you choose)
-- **Styling**: Tailwind CSS (or any other CSS framework)
+- **Database**: Sqlite
+- **Styling**: Tailwind CSS
 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Dev41/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/Boot41/patient-management-b41.git
+   cd patient-management-b41
    ```
 
-2. Set up the backend:
-   - Navigate to the backend directory:
-     ```bash
-     cd backend
-     ```
-   - Create a virtual environment and activate it:
-     ```bash
-     python -m venv venv
-     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-     ```
-   - Install the required packages:
-     ```bash
-     pip install -r requirements.txt
-     ```
+## Running the application
+- You can easily set up and run the application using Docker.
 
-3. Set up the frontend:
-   - Navigate to the frontend directory:
-     ```bash
-     cd frontend
-     ```
-   - Install the required packages:
-     ```bash
-     npm install
-     ```
-
-## Usage
-1. Start the backend server from the project root directory:
+- In the project root directory, run the following command to build and start the application in detached mode:
    ```bash
-   uvicorn server.main:app --reload
+   docker compose up -d
    ```
+- Open your browser and navigate to http://localhost:3000 to interact with the application.
 
-2. Start the frontend development server:
-   ```bash
-   npm start
-   ```
-
-3. Open your browser and navigate to `http://localhost:3000` to view the application.
 
 ## Contributing
 Contributions are welcome! Please follow these steps:
